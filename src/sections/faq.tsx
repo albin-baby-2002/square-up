@@ -1,5 +1,7 @@
+"use client";
+import { FaqItem } from "@/components/faq-item";
 import SectionHeader from "@/components/section-header";
-import React from "react";
+import React, { useState } from "react";
 
 const FAQS = [
   {
@@ -54,12 +56,46 @@ const FAQS = [
 ];
 
 const Faq = () => {
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
   return (
-    <div id="faq" className="border-gray-15 border-b">
+    <div id="faq" className="border-gray-15">
       <SectionHeader
         heading="Frequently Asked Questions"
         description="Still you have any questions? Contact our Team via hello@squareup.com"
       />
+      <div className="grid grid-cols-2 align-top">
+        <div className="flex flex-col border-r border-gray-15">
+          {FAQS.map((faq) => {
+            if (faq.id > 4) return null;
+            return (
+              <FaqItem
+                key={faq.id}
+                number={faq.id}
+                title={faq.question}
+                description={faq.answer}
+                isOpen={openFaq === faq.id}
+                onToggle={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
+              />
+            );
+          })}
+        </div>
+
+        <div className="flex flex-col">
+          {FAQS.map((faq) => {
+            if (faq.id <= 4) return null;
+            return (
+              <FaqItem
+                key={faq.id}
+                number={faq.id}
+                title={faq.question}
+                description={faq.answer}
+                isOpen={openFaq === faq.id}
+                onToggle={() => setOpenFaq(openFaq === faq.id ? null : faq.id)}
+              />
+            );
+          })}
+        </div>
+      </div>
     </div>
   );
 };

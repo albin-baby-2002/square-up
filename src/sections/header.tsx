@@ -27,7 +27,7 @@ type NavItemLabel = NavItem["label"];
 //----------------------------------------------------
 const Header = () => {
   return (
-    <header className="border-gray-15 z-50 sticky top-0 flex w-full justify-center border-b py-[16px] backdrop-blur-xl">
+    <header className="border-gray-15 sticky top-0 z-50 flex w-full justify-center border-b py-[16px] backdrop-blur-xl">
       <div className="container flex items-center justify-between">
         <Logo />
         <NavBar />
@@ -64,6 +64,7 @@ const NavBar = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+
             const id = entry.target.id;
             // Capitalize first letter to match nav labels
             const sectionName = id.charAt(0).toUpperCase() + id.slice(1);
@@ -78,7 +79,7 @@ const NavBar = () => {
         });
       },
       {
-        threshold: 0.6, // Section needs to be 60% visible
+        threshold: 0.3, // Section needs to be 60% visible
         rootMargin: "-100px 0px -100px 0px", // Offset for header
       },
     );
