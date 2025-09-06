@@ -31,7 +31,15 @@
 body {
   background: var(--background);
   color: var(--color-gray-90);
-  scroll-behavior: smooth
+  scroll-behavior: smooth;
+}
+
+/* scrollbar styles */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #363636 #121212;
+  scroll-behavior: smooth;
 }
 
 .container {
@@ -54,10 +62,14 @@ body {
   @apply bg-gray-15 z-10 flex items-center rounded-lg p-3 text-[18px] leading-[100%] text-white;
 }
 
-/* scrollbar styles */
+.form-card {
+  @apply border-gray-15 bg-gray-15/50 rounded-md border px-6 py-5;
+}
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #363636 #121212;
-  scroll-behavior: smooth;
+.form-label {
+  @apply text-[18px] leading-[150%] font-medium;
+}
+
+.form-input {
+  @apply text-lg focus:outline-0 border-b border-gray-15 pb-1
 }

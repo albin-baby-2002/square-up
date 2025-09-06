@@ -3,7 +3,7 @@ import Why2 from "@/assets/why-choose-us/why-2";
 import Why3 from "@/assets/why-choose-us/why-3";
 import Why4 from "@/assets/why-choose-us/why-4";
 import SectionHeader from "@/components/section-header";
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 const VALUES = [
@@ -40,16 +40,21 @@ const WhyChooseUs = () => {
         heading="Why Choose SquareIt"
         description="Experience excellence in digital craftsmanship with our team of skilled professionals dedicated to delivering exceptional results."
       />
-      <div className=" grid grid-cols-2 ">
+      <div className="grid grid-cols-2">
         {VALUES.map((value, index) => (
-          <div key={index} className={cn(" p-[60px] border-b space-y-[30px] border-gray-15",{
-            " border-r": index %2 === 0
-          })}>
-            <div className=" flex  items-center gap-[14px]">
+          <div
+            key={index}
+            className={cn("border-gray-15 space-y-[30px] border-b p-[60px]", {
+              "border-r": index % 2 === 0,
+            })}
+          >
+            <div className="flex items-center gap-[14px]">
               {value.image}
-              <h3 className=" font-medium text-xl">{value.heading}</h3>
+              <h3 className="text-xl font-medium">{value.heading}</h3>
             </div>
-            <p className=" text-[16px] xl:text-[18px] leading-[150%]">{value.description}</p>
+            <p className="text-[16px] leading-[150%] xl:text-[18px]">
+              {value.description}
+            </p>
           </div>
         ))}
       </div>

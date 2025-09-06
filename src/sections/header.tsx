@@ -1,6 +1,6 @@
 "use client";
 import Logo from "@/components/logo";
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, {
@@ -12,13 +12,14 @@ import React, {
 } from "react";
 
 //----------------------------------------------------
-const NAV_ITEMS = [
-  { label: "Home", href: "/" },
+
+export const NAV_ITEMS = [
+  { label: "Home", href: "/#home" },
   { label: "Services", href: "/#services" },
   { label: "Work", href: "/#work" },
   { label: "Feedback", href: "/#feedback" },
   { label: "Faq", href: "/#faq" },
-  { label: "Careers", href: "/#careers" },
+  { label: "Contact", href: "/#contact" },
 ] as const;
 
 type NavItem = (typeof NAV_ITEMS)[number];
@@ -44,12 +45,13 @@ const NavBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [activeSection, setActiveSection] = useState("Home");
+  const inactive = useRef(false);
 
   // Track active section using Intersection Observer
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const sections = ["services", "work", "feedback", "faq", "careers"];
+    const sections = ["home", "services", "work", "feedback", "faq", "contact"]; // Changed order - home first!
     const sectionElements: HTMLElement[] = [];
 
     // Get all section elements
@@ -62,25 +64,31 @@ const NavBar = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (inactive.current) return; // Skip ALL observer updates when user clicked nav
+
+        // Find the entry with the highest intersection ratio
+        let maxEntry = entries[0];
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-
-            const id = entry.target.id;
-            // Capitalize first letter to match nav labels
-            const sectionName = id.charAt(0).toUpperCase() + id.slice(1);
-            setActiveSection(sectionName);
-
-            // Update URL hash without triggering navigation
-            const newHash = `#${id}`;
-            if (window.location.hash !== newHash) {
-              window.history.replaceState(null, "", `/${newHash}`);
-            }
+          if (entry.intersectionRatio > maxEntry.intersectionRatio) {
+            maxEntry = entry;
           }
         });
+
+        if (maxEntry.isIntersecting && maxEntry.intersectionRatio > 0.3) {
+          const id = maxEntry.target.id;
+          const sectionName = id.charAt(0).toUpperCase() + id.slice(1);
+          setActiveSection(sectionName);
+
+          // Update URL hash without triggering navigation
+          const newHash = `#${id}`;
+          if (window.location.hash !== newHash) {
+            window.history.replaceState(null, "", `/${newHash}`);
+          }
+        }
       },
       {
-        threshold: 0.3, // Section needs to be 60% visible
-        rootMargin: "-100px 0px -100px 0px", // Offset for header
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], // Multiple thresholds
+        rootMargin: "-80px 0px -80px 0px", // Reduced margin
       },
     );
 
@@ -101,12 +109,24 @@ const NavBar = () => {
 
   // Handle manual navigation (clicking nav items)
   const handleNavClick = (item: NavItem) => {
-    if (item.href === "/") {
-      setActiveSection("Home");
+    // Immediately set the active section
+    if (item.href === "/#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        setActiveSection("Home");
+      }, 300);
     } else if (item.href.startsWith("/#")) {
       const section = item.href.slice(2);
       setActiveSection(section.charAt(0).toUpperCase() + section.slice(1));
     }
+
+    // Disable intersection observer for longer duration
+    inactive.current = true;
+
+    // Re-enable after scroll animation completes
+    setTimeout(() => {
+      inactive.current = false;
+    }, 1000); // Increased from 500ms to 1000ms
   };
 
   const { refs, highlightWidth, transformX } = useNavAnimation(activeSection);
@@ -156,6 +176,7 @@ const getIsActive = (
 ): boolean => {
   if (pathname === "/") {
     // Home is active when activeSection is "Home"
+
     if (item.label === "Home" && activeSection === "Home") {
       return true;
     }
@@ -184,7 +205,7 @@ const useNavAnimation = (activeSection: string) => {
     Work: null,
     Feedback: null,
     Faq: null,
-    Careers: null,
+    Contact: null,
   });
 
   // Find the currently active nav item

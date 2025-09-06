@@ -1,5 +1,5 @@
 import SectionHeader from "@/components/section-header";
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
 

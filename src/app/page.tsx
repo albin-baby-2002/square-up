@@ -1,5 +1,7 @@
 import { ClientTestimonials } from "@/sections/client-testimonials";
+import ContactUs from "@/sections/contact-us";
 import Faq from "@/sections/faq";
+import Footer from "@/sections/footer";
 import Header from "@/sections/header";
 import HeroSection from "@/sections/hero-section";
 import OurServices from "@/sections/our-services";
@@ -17,7 +19,9 @@ export default function Home() {
         <WhyChooseUs />
         <ClientTestimonials />
         <Faq />
+        <ContactUs />
       </main>
+      <Footer />
     </>
   );
 }

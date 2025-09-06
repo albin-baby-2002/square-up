@@ -2,7 +2,7 @@ import Service1 from "@/assets/services/s1";
 import Service2 from "@/assets/services/s2";
 import Service3 from "@/assets/services/s3";
 import SectionHeader from "@/components/section-header";
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import React from "react";
 
 const SERVICES = [

@@ -49,8 +49,8 @@ const Service1 = () => {
           y2="88"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#242424" />
-          <stop offset="1" stop-color="#242424" stop-opacity="0" />
+          <stop stopColor="#242424" />
+          <stop offset="1" stopColor="#242424" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_29_3208"
@@ -60,8 +60,8 @@ const Service1 = () => {
           y2="88"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.224072" stop-color="#9EFF00" />
-          <stop offset="0.687143" stop-color="#9EFF00" stop-opacity="0" />
+          <stop offset="0.224072" stopColor="#9EFF00" />
+          <stop offset="0.687143" stopColor="#9EFF00" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_29_3208"
@@ -71,8 +71,8 @@ const Service1 = () => {
           y2="88"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#2E2E2E" />
-          <stop offset="1" stop-color="#2E2E2E" stop-opacity="0" />
+          <stop stopColor="#2E2E2E" />
+          <stop offset="1" stopColor="#2E2E2E" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>

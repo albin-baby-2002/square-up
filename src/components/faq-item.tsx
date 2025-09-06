@@ -1,4 +1,4 @@
-import { cn } from "@/libs/utils";
+import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 
 type TProps = {
@@ -21,9 +21,8 @@ export const FaqItem = ({
   return (
     <div
       className={cn(
-        "border-gray-15 h-max w-full border-b px-10 py-[30px] transition-all duration-300 ease-in-out",
+        "border-gray-15 h-max w-full border-b px-10 py-[30px] transition-all duration-500 ease-in-out",
         {
-          isOpen: "",
           "border-r": borderRight,
         },
       )}
@@ -35,12 +34,11 @@ export const FaqItem = ({
         onClick={onToggle}
       >
         <div className="flex items-center justify-center space-x-4">
-          <span className="flex size-[62px] items-center justify-center bg-gradient-to-b from-gray-15 to-gray-15/0 rounded-md text-2xl font-bold">
+          <span className="from-gray-15 to-gray-15/0 flex size-[62px] items-center justify-center rounded-md bg-gradient-to-b text-2xl font-bold">
             {number.toString().padStart(2, "0")}
           </span>
           <h3 className="text-lg font-medium xl:text-xl">{title}</h3>
         </div>
-
         <button className="transition-colors hover:text-white">
           <X
             className={cn(
@@ -51,13 +49,20 @@ export const FaqItem = ({
         </button>
       </div>
 
-      {isOpen && (
+      {/* Animated content container */}
+
+      <div
+        className={cn(
+          "overflow-hidden transition-all duration-500 ease-in-out",
+          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0",
+        )}
+      >
         <div className="px-4 pb-4">
           <div className="text-gray-90 ml-8 leading-relaxed xl:text-[18px]">
             {description}
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
