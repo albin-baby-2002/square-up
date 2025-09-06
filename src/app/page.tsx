@@ -1,15 +1,22 @@
+import { ClientTestimonials } from "@/sections/client-testimonials";
+import Faq from "@/sections/faq";
 import Header from "@/sections/header";
 import HeroSection from "@/sections/hero-section";
+import OurServices from "@/sections/our-services";
 import TrustedBy from "@/sections/trusted-by";
+import WhyChooseUs from "@/sections/why-choose-us";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className=" mx-auto container border-x border-gray-15">
+      <main className="border-gray-15 container mx-auto border-x">
         <HeroSection />
-        <TrustedBy/>
-        <div className=" h-[800px] w-full"></div>
+        <TrustedBy />
+        <OurServices />
+        <WhyChooseUs />
+        <ClientTestimonials />
+        <Faq />
       </main>
     </>
   );

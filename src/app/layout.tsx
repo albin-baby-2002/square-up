@@ -9,7 +9,7 @@ const barlow = Barlow({
 });
 
 export const metadata: Metadata = {
-  title: 'SquareUp',
+  title: 'SquareIt',
   description: 'Your Digital Product Studio',
 };
 

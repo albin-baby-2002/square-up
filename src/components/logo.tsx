@@ -1,11 +1,13 @@
-import SquareUp from "@/assets/square-up";
+import { SquareSlash } from "lucide-react";
 import React from "react";
 
 const Logo = () => {
   return (
     <div className="flex items-center gap-[10px]">
-      <SquareUp />
-      <p className=" font-semibold text-xl ">SquareUp</p>
+      <div className="flex size-10 items-center justify-center rounded-sm bg-green-50 text-black">
+        <SquareSlash size={28} />
+      </div>
+      <p className="text-xl font-semibold">SquareIt</p>{" "}
     </div>
   );
 };

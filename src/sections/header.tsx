@@ -16,8 +16,8 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
   { label: "Work", href: "/#work" },
-  { label: "Process", href: "/#process" },
-  { label: "About", href: "/#about" },
+  { label: "Feedback", href: "/#feedback" },
+  { label: "Faq", href: "/#faq" },
   { label: "Careers", href: "/#careers" },
 ] as const;
 
@@ -49,7 +49,7 @@ const NavBar = () => {
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const sections = ["services", "work", "process", "about", "careers"];
+    const sections = ["services", "work", "feedback", "faq", "careers"];
     const sectionElements: HTMLElement[] = [];
 
     // Get all section elements
@@ -126,7 +126,6 @@ const NavBar = () => {
           <Link
             key={item.href}
             href={item.href}
-            scroll={false}
             onClick={() => handleNavClick(item)}
             ref={(el) => {
               if (refs.current) {
@@ -182,8 +181,8 @@ const useNavAnimation = (activeSection: string) => {
     Home: null,
     Services: null,
     Work: null,
-    Process: null,
-    About: null,
+    Feedback: null,
+    Faq: null,
     Careers: null,
   });
 
