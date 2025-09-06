@@ -27,7 +27,7 @@ type NavItemLabel = NavItem["label"];
 //----------------------------------------------------
 const Header = () => {
   return (
-    <header className="border-gray-15 flex w-full justify-center border-b py-[16px]">
+    <header className="border-gray-15 z-50 sticky top-0 flex w-full justify-center border-b py-[16px] backdrop-blur-xl">
       <div className="container flex items-center justify-between">
         <Logo />
         <NavBar />
