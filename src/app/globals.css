@@ -1,26 +1,42 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --background: #030303;
+
+  /* Greens */
+  --color-green-50: #9eff00;
+  --color-green-60: #b1ff33;
+  --color-green-70: #c5ff66;
+  --color-green-80: #d8ff99;
+  --color-green-90: #ecffcc;
+  --color-green-95: #f5ffe5;
+  --color-green-97: #f9fff0;
+  --color-green-99: #fdfffa;
+
+  /* Grays */
+  --color-gray-10: #191919;
+  --color-gray-15: #262626;
+  --color-gray-20: #333333;
+  --color-gray-30: #4c4c4d;
+  --color-gray-35: #59595a;
+  --color-gray-40: #656567;
+  --color-gray-60: #98989a;
+  --color-gray-90: #e6e6e6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  --font-barlow: var(--font-barlow);
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-gray-90);
+}
+
+.container {
+  @apply max-w-[1596px];
+}
+
+.primary-btn {
+  @apply text-gray-15 h-[44px] cursor-pointer rounded-lg bg-green-50 px-4 text-base font-medium;
 }
