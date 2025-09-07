@@ -3,9 +3,8 @@ import React from "react";
 const Service3 = () => {
   return (
     <svg
-      width="70"
-      height="70"
-      viewBox="0 0 88 88"
+      className="h-full w-full"
+       viewBox="0 0 88 88"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

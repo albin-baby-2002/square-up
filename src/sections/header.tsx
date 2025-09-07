@@ -30,11 +30,11 @@ type NavItemLabel = NavItem["label"];
 const Header = () => {
   return (
     <header className="border-gray-15 sticky top-0 z-50 flex w-full justify-center border-b py-4 md:py-[16px] backdrop-blur-xl">
-      <div className="container flex items-center px-4 justify-between">
+      <div className="container flex items-center px-4 xl:px-0 justify-between">
         <Logo />
         <NavBar />
-        <button className="primary-btn hidden md:block">Contact Us</button>
-        <Image src={'/menu.svg'} width={28} height={28} alt="Menu" />
+        <button className="primary-btn hidden lg:block">Contact Us</button>
+        <Image src={'/menu.svg'} width={28} height={28} className=" md:size-10 lg:hidden" alt="Menu" />
       </div>
     </header>
   );
@@ -133,7 +133,7 @@ const NavBar = () => {
   const { refs, highlightWidth, transformX } = useNavAnimation(activeSection);
 
   return (
-    <nav className="relative hidden md:flex items-center justify-center">
+    <nav className="relative hidden lg:flex items-center justify-center">
       <div
         className="absolute left-0 z-[-1] h-10 rounded-sm bg-white/10 backdrop-blur-2xl transition-all duration-300"
         style={{

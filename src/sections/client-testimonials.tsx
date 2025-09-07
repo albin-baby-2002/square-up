@@ -7,7 +7,7 @@ const CLIENT_TESTIMONIALS = [
   {
     imgSrc: "/clients/cl-1.svg",
     heading:
-      "squareIt has been Instrumental in Transforming our Online Presence",
+      "SquareIt has been Instrumental in Transforming our Online Presence",
     testimonial:
       "Their team's expertise in web development and design resulted in a visually stunning and user-friendly e-commerce platform. Our online sales have skyrocketed, and we couldn't be happier.",
     name: "John Smith",
@@ -24,7 +24,7 @@ const CLIENT_TESTIMONIALS = [
   {
     imgSrc: "/clients/cl-3.svg",
     heading:
-      "squareIt developed a comprehensive booking and reservation system for our event management company",
+      "SquareIt developed a comprehensive booking and reservation system for our event management company",
     testimonial:
       "Their attention to detail and commitment to delivering a user-friendly platform was evident throughout the project. The system has streamlined our operations and enhanced our clients’ event experiences.",
     name: "Mark Thompson",
@@ -41,9 +41,9 @@ const CLIENT_TESTIMONIALS = [
   {
     imgSrc: "/clients/cl-5.svg",
     heading:
-      "squareIt designed and developed a captivating web portal for showcasing our real estate listings",
+      "SquareIt designed and developed a captivating web portal for showcasing our real estate listings",
     testimonial:
-      "The platform is visually appealing and easy to navigate, allowing potential buyers to find their dream homes effortlessly. squareIt's expertise in the real estate industry is unmatched.",
+      "The platform is visually appealing and easy to navigate, allowing potential buyers to find their dream homes effortlessly. SquareIt's expertise in the real estate industry is unmatched.",
     name: "Michael Anderson",
     role: "Founder of Dream Homes Realty",
   },
@@ -52,7 +52,7 @@ const CLIENT_TESTIMONIALS = [
     heading:
       "FitLife Tracker wanted a mobile app that tracked fitness activities and provided personalized workout plans",
     testimonial:
-      "squareIt's team developed an intuitive and feature-rich app that has helped our users stay motivated and achieve their fitness goals. We highly recommend squareIt for any health and fitness app development needs.",
+      "SquareIt's team developed an intuitive and feature-rich app that has helped our users stay motivated and achieve their fitness goals. We highly recommend SquareIt for any health and fitness app development needs.",
     name: "Emily Turner",
     role: "CEO of FitLife Tracker",
   },
@@ -63,16 +63,16 @@ export const ClientTestimonials = () => {
     <div id="feedback">
       <SectionHeader
         heading="What our Clients say About us"
-        description="At squareIt, we take pride in delivering exceptional digital products and services that drive success for our clients. Here's what some of our satisfied clients have to say about their experience working with us"
+        description="At squareIt, we take pride in delivering exceptional digital products and services that drive success for our clients."
       />
       <div className="grid grid-cols-1 md:grid-cols-2">
         {CLIENT_TESTIMONIALS.map((value, index) => (
           <div
             key={index}
             className={cn(
-              "border-gray-15 space-y-[40px] border-b px-[60px] py-[80px]",
+              "border-gray-15 flex flex-col  justify-between space-y-[40px]  border-b p-10 xl:p-12",
               {
-                "border-r": index % 2 === 0,
+                "md:border-r": index % 2 === 0,
               },
             )}
           >
@@ -84,7 +84,7 @@ export const ClientTestimonials = () => {
                 {value.testimonial}
               </p>
             </div>
-            <div className="border-gray-15 flex w-full justify-between rounded-md border p-[14px]">
+            <div className="border-gray-15 flex  w-full justify-between rounded-md border p-[14px]">
               <div className="flex gap-3">
                 <Image
                   src={value.imgSrc}
@@ -97,8 +97,8 @@ export const ClientTestimonials = () => {
                   <p className="text-gray-90 text-sm">{value.role}</p>
                 </div>
               </div>
-              <button className="teritiary-btn !rounded-sm">
-                Open Website
+              <button className="teritiary-btn hidden !rounded-sm sm:block md:hidden lg:block">
+                Open <span className="hidden sm:inline">Website</span>{" "}
               </button>
             </div>
           </div>

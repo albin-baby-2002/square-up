@@ -7,21 +7,22 @@ const ContactUs = () => {
   const [values, setValues] = useState([200, 500]);
   return (
     <div id="contact">
-      <div className="border-gray-15 relative mx-auto flex w-full flex-col items-center justify-center space-y-[14px] border-b py-[100px] text-center">
-        <div className="absolute top-0 z-[-2] h-full w-full bg-[radial-gradient(#191919_1px,#030303_1px)] bg-[size:20px_20px]"></div>
+      <div className="border-gray-15 relative mx-auto flex w-full flex-col items-center justify-center space-y-[14px] border-b py-[50px] text-center lg:py-[70px] xl:py-[100px]">
+        {/* pattern */}
+        <div className="absolute top-0 h-full w-full bg-[radial-gradient(#191919_1px,#030303_1px)] bg-[size:20px_20px]"></div>
 
-        <h2 className="text-[42px] font-semibold">
+        <h2 className="z-10 max-w-[90%] text-[28px] font-semibold sm:text-[32px] md:text-[36px] lg:text-[42px]">
           Thank you for your Interest in SquareUp.
         </h2>
-        <p className="text-gray-90 text-[18px] lg:max-w-[50%]">
+        <p className="text-gray-90 z-10 max-w-[90%] text-[14px] sm:max-w-[80%] sm:text-[16px] lg:max-w-[70%] lg:text-[18px] xl:max-w-[50%]">
           We would love to hear from you and discuss how we can help bring your
           digital ideas to life. Here are the different ways you can get in
           touch with us.
         </p>
-        <button className="primary-btn mt-8">Get A Quote</button>
+        <button className="primary-btn z-10 mt-8">Get A Quote</button>
       </div>
 
-      <div className="border-gray-15 mx-auto space-y-6 border-x p-[60px] lg:max-w-[846px]">
+      <div className="border-gray-15 mx-auto space-y-6 p-[40px] xl:p-[60px] lg:max-w-[846px] xl:border-x">
         <div className="grid grid-cols-2 gap-6">
           <div className="form-card flex flex-col gap-4">
             <p className="form-label">Full Name</p>

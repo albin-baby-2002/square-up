@@ -14,12 +14,16 @@ export default function Home() {
       <Header />
       <main className="border-gray-15 container mx-auto md:border-x">
         <HeroSection />
-        <TrustedBy />
-        <OurServices />
-        <WhyChooseUs />
-        <ClientTestimonials />
-        <Faq />
-        <ContactUs />
+        <div className=" bg-background ">
+          <div className="border-gray-15 mx-4 2xl:mx-0 border-x 2xl:border-x-0">
+            <TrustedBy />
+            <OurServices />
+            <WhyChooseUs />
+            <ClientTestimonials />
+            <Faq />
+            <ContactUs />
+          </div>
+        </div>
       </main>
       <Footer />
     </>

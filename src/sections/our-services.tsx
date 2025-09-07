@@ -28,26 +28,31 @@ const SERVICES = [
 
 const OurServices = () => {
   return (
-    <div id="services" className="border-gray-15 border-b">
+    <div id="services" className="border-gray-15 md:border-b">
       <SectionHeader
         heading="Our Services"
         description="Transform your brand with our innovative digital solutions that captivate and engage your audience."
       />
-      <div className="grid w-full md:grid-cols-3">
+      <div className="grid w-full md:grid-cols-2 lg:grid-cols-3">
         {SERVICES.map((service, index) => (
           <div
             className={cn(
-              "flex min-h-[500px] flex-col justify-between p-10 xl:p-12",
+              "border-gray-15 flex  flex-col justify-between space-y-9  border-b p-10 lg:min-h-[500px] md:last:border-b-0 lg:border-b-0 xl:p-12",
               {
-                "border-gray-15 border-r": index !== 2,
+                "lg:border-r": index !== 2,
+                "md:border-r":index % 2 === 0 ,
               },
             )}
             key={index}
           >
             <div className="flex flex-col gap-7 leading-[150%]">
-              {service.image}
-              <h3 className="text-[24px] font-semibold">{service.heading}</h3>
-              <p className="text-gray-90 xl:text-[18px]">
+              <div className="flex md:flex-col md:gap-4 md:items-start items-center gap-3">
+                <div className=" size-[58px] md:size-[65px]">{service.image}</div>
+                <h3 className="text-xl md:text-2xl font-medium">
+                  {service.heading}
+                </h3>
+              </div>
+              <p className="text-[16px] leading-[150%] xl:text-[18px] text-gray-90">
                 {service.description}
               </p>
             </div>

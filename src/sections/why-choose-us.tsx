@@ -40,19 +40,19 @@ const WhyChooseUs = () => {
         heading="Why Choose SquareIt"
         description="Experience excellence in digital craftsmanship with our team of skilled professionals dedicated to delivering exceptional results."
       />
-      <div className="grid grid-cols-2">
+      <div className="grid md:grid-cols-2">
         {VALUES.map((value, index) => (
           <div
             key={index}
-            className={cn("border-gray-15 space-y-[30px] border-b p-[60px]", {
-              "border-r": index % 2 === 0,
+            className={cn("border-gray-15 space-y-[30px] border-b p-10 xl:p-12", {
+              "md:border-r": index % 2 === 0,
             })}
           >
             <div className="flex items-center gap-[14px]">
-              {value.image}
-              <h3 className="text-xl font-medium">{value.heading}</h3>
+              <div className="size-[58px] md:size-[65px]">{value.image}</div>
+              <h3 className="text-xl md:text-2xl font-medium">{value.heading}</h3>
             </div>
-            <p className="text-[16px] leading-[150%] xl:text-[18px]">
+            <p className=" text-gray-90 text-[16px] leading-[150%] xl:text-[18px]">
               {value.description}
             </p>
           </div>

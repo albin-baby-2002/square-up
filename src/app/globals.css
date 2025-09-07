@@ -57,7 +57,7 @@ body {
 }
 
 .container {
-  @apply max-w-[1596px];
+  @apply max-w-[1536px];
 }
 
 .primary-btn {
