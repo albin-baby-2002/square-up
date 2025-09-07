@@ -1,6 +1,7 @@
 "use client";
 import Logo from "@/components/logo";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, {
@@ -28,11 +29,12 @@ type NavItemLabel = NavItem["label"];
 //----------------------------------------------------
 const Header = () => {
   return (
-    <header className="border-gray-15 sticky top-0 z-50 flex w-full justify-center border-b py-[16px] backdrop-blur-xl">
-      <div className="container flex items-center justify-between">
+    <header className="border-gray-15 sticky top-0 z-50 flex w-full justify-center border-b py-3 md:py-[16px] backdrop-blur-xl">
+      <div className="container flex items-center px-4 justify-between">
         <Logo />
         <NavBar />
-        <button className="primary-btn">Contact Us</button>
+        <button className="primary-btn hidden md:block">Contact Us</button>
+        <Image src={'/menu.svg'} width={28} height={28} alt="Menu" />
       </div>
     </header>
   );
@@ -43,7 +45,6 @@ export default Header;
 // child components
 const NavBar = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const [activeSection, setActiveSection] = useState("Home");
   const inactive = useRef(false);
 
@@ -51,7 +52,7 @@ const NavBar = () => {
   useEffect(() => {
     if (pathname !== "/") return;
 
-    const sections = ["home", "services", "work", "feedback", "faq", "contact"]; // Changed order - home first!
+    const sections = ["home", "services", "work", "feedback", "faq", "contact"];
     const sectionElements: HTMLElement[] = [];
 
     // Get all section elements
@@ -132,7 +133,7 @@ const NavBar = () => {
   const { refs, highlightWidth, transformX } = useNavAnimation(activeSection);
 
   return (
-    <nav className="relative flex items-center justify-center">
+    <nav className="relative hidden md:flex items-center justify-center">
       <div
         className="absolute left-0 z-[-1] h-10 rounded-sm bg-white/10 backdrop-blur-2xl transition-all duration-300"
         style={{
@@ -208,7 +209,6 @@ const useNavAnimation = (activeSection: string) => {
     Contact: null,
   });
 
-  // Find the currently active nav item
   const activeItem = useMemo(() => {
     return NAV_ITEMS.find((item) => item.label === activeSection);
   }, [activeSection]);
@@ -228,6 +228,7 @@ const useNavAnimation = (activeSection: string) => {
   const highlightWidth = useMemo(() => {
     if (!activeItem) return 0;
     return refs.current[activeItem.label]?.offsetWidth || 0;
+    //eslint-disable-next-line
   }, [activeItem, refVersion]);
 
   const transformX = useMemo(() => {
@@ -239,6 +240,7 @@ const useNavAnimation = (activeSection: string) => {
       width += refs.current[item.label]?.offsetWidth || 0;
     }
     return width;
+    //eslint-disable-next-line
   }, [activeItem, refVersion]);
 
   return { refs, highlightWidth, transformX };

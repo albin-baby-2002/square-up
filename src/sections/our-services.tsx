@@ -33,7 +33,7 @@ const OurServices = () => {
         heading="Our Services"
         description="Transform your brand with our innovative digital solutions that captivate and engage your audience."
       />
-      <div className="grid w-full grid-cols-3">
+      <div className="grid w-full md:grid-cols-3">
         {SERVICES.map((service, index) => (
           <div
             className={cn(

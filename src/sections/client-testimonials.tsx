@@ -65,7 +65,7 @@ export const ClientTestimonials = () => {
         heading="What our Clients say About us"
         description="At squareIt, we take pride in delivering exceptional digital products and services that drive success for our clients. Here's what some of our satisfied clients have to say about their experience working with us"
       />
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2">
         {CLIENT_TESTIMONIALS.map((value, index) => (
           <div
             key={index}

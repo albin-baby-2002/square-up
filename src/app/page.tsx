@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="border-gray-15 container mx-auto border-x">
+      <main className="border-gray-15 container mx-auto md:border-x">
         <HeroSection />
         <TrustedBy />
         <OurServices />

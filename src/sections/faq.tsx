@@ -63,7 +63,7 @@ const Faq = () => {
         heading="Frequently Asked Questions"
         description="Still you have any questions? Contact our Team via hello@squareup.com"
       />
-      <div className="grid grid-cols-2 align-top">
+      <div className="grid grid-cols-1 md:grid-cols-2 align-top">
         <div className="flex flex-col border-r border-gray-15">
           {FAQS.map((faq) => {
             if (faq.id > 4) return null;
