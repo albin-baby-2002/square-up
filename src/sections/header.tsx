@@ -3,7 +3,7 @@ import Logo from "@/components/logo";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, {
   useLayoutEffect,
   useMemo,

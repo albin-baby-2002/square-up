@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${barlow.variable} font-barlow max-w-screen overflow-hidden antialiased`}
+        className={`${barlow.variable} font-barlow max-w-screen overflow-x-clip relative antialiased`}
       >
         {children}
       </body>
