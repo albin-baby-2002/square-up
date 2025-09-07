@@ -6,7 +6,7 @@ html {
 }
 
 @theme {
-  --background: #030303;
+  --color-background: #030303;
 
   /* Greens */
   --color-green-50: #9eff00;
@@ -34,7 +34,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: var(--color-background);
   color: var(--color-gray-90);
   scroll-behavior: smooth;
 }
