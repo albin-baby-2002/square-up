@@ -1,6 +1,7 @@
 "use client";
 import Logo from "@/components/logo";
 import { cn } from "@/lib/utils";
+import { X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,19 +29,153 @@ type NavItemLabel = NavItem["label"];
 
 //----------------------------------------------------
 const Header = () => {
+  const [showMobileNav, setShowMobileNav] = useState(false);
+
+  // Close mobile nav when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (showMobileNav && !target.closest(".mobile-nav-container")) {
+        setShowMobileNav(false);
+      }
+    };
+
+    if (showMobileNav) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showMobileNav]);
+
   return (
-    <header className="border-gray-15 sticky top-0 z-50 flex w-full justify-center border-b py-4 md:py-[16px] backdrop-blur-xl">
-      <div className="container flex items-center px-4 xl:px-0 justify-between">
-        <Logo />
-        <NavBar />
-        <button className="primary-btn hidden lg:block">Contact Us</button>
-        <Image src={'/menu.svg'} width={28} height={28} className=" md:size-10 lg:hidden" alt="Menu" />
-      </div>
-    </header>
+    <>
+      <header className="border-gray-15 sticky top-0 z-50 flex w-full justify-center border-b py-4 backdrop-blur-xl md:py-[16px]">
+        <div className="container flex items-center justify-between px-4 xl:px-0">
+          <Logo />
+          <NavBar />
+          <button className="primary-btn hidden lg:block">Contact Us</button>
+          <button
+            className="mobile-nav-container lg:hidden"
+            onClick={() => {
+              setShowMobileNav((prev) => !prev);
+            }}
+          >
+            {showMobileNav ? (
+              <div className="bg-gray-15 flex size-[28px] items-center justify-center rounded-[6px] md:size-10">
+                <X size={18} className="text-green-80 md:size-6" />
+              </div>
+            ) : (
+              <Image
+                src={"/menu.svg"}
+                width={28}
+                height={28}
+                className="md:size-10 lg:hidden"
+                alt="Menu"
+              />
+            )}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile Navigation */}
+      <MobileNav
+        isOpen={showMobileNav}
+        onClose={() => setShowMobileNav(false)}
+      />
+    </>
   );
 };
 
 export default Header;
+
+// Mobile Navigation Component
+const MobileNav = ({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) => {
+  const pathname = usePathname();
+  const [activeSection, setActiveSection] = useState("Home");
+
+  // Handle mobile nav item click
+  const handleMobileNavClick = (item: NavItem) => {
+    // Close the mobile nav
+    onClose();
+
+    // Handle navigation
+    if (item.href === "/#home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        setActiveSection("Home");
+      }, 300);
+    } else if (item.href.startsWith("/#")) {
+      const section = item.href.slice(2);
+      setActiveSection(section.charAt(0).toUpperCase() + section.slice(1));
+    }
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className={cn(
+          "bg-background fixed inset-0 z-40 backdrop-blur-sm transition-opacity duration-300 lg:hidden",
+          isOpen ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+        onClick={onClose}
+      />
+
+      {/* Mobile Navigation Menu */}
+      <div
+        className={cn(
+          "mobile-nav-container border-gray-15 fixed right-0 left-0 z-50 border-b backdrop-blur-xl transition-all duration-500 ease-out lg:hidden",
+          isOpen
+            ? "top-[72px] translate-y-0 opacity-100 md:top-[80px]"
+            : "pointer-events-none top-[72px] -translate-y-full opacity-0 md:top-[80px]",
+        )}
+      >
+        <nav className="container px-4 py-6">
+          <div className="flex flex-col space-y-1">
+            {NAV_ITEMS.map((item) => {
+              const isActive = getIsActive(pathname, activeSection, item);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => handleMobileNavClick(item)}
+                  className={cn(
+                    "flex items-center rounded-lg px-4 py-3 text-base transition-colors duration-200",
+                    "hover:bg-white/10 active:bg-white/15",
+                    isActive
+                      ? "bg-white/10 font-semibold text-white"
+                      : "text-gray-300 hover:text-white",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+
+            {/* Mobile Contact Button */}
+            <div className="border-gray-15 mt-4 border-t pt-4">
+              <button
+                onClick={onClose}
+                className="primary-btn w-full py-3 text-center"
+              >
+                Contact Us
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </>
+  );
+};
 
 // child components
 const NavBar = () => {
@@ -133,7 +268,7 @@ const NavBar = () => {
   const { refs, highlightWidth, transformX } = useNavAnimation(activeSection);
 
   return (
-    <nav className="relative hidden lg:flex items-center justify-center">
+    <nav className="relative hidden items-center justify-center lg:flex">
       <div
         className="absolute left-0 z-[-1] h-10 rounded-sm bg-white/10 backdrop-blur-2xl transition-all duration-300"
         style={{
@@ -177,7 +312,6 @@ const getIsActive = (
 ): boolean => {
   if (pathname === "/") {
     // Home is active when activeSection is "Home"
-
     if (item.label === "Home" && activeSection === "Home") {
       return true;
     }

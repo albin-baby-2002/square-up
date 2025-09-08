@@ -12,10 +12,10 @@ export default function Home() {
   return (
     <>
       <Header />
-      <main className="border-gray-15 container mx-auto md:border-x">
+      <main className="border-gray-15 container mx-auto max-w-screen overflow-x-hidden md:border-x">
         <HeroSection />
         <div className=" bg-background ">
-          <div className="border-gray-15 mx-4 2xl:mx-0 border-x 2xl:border-x-0">
+          <div className="border-gray-15 mx-2 md:mx-4 2xl:mx-0 border-x 2xl:border-x-0">
             <TrustedBy />
             <OurServices />
             <WhyChooseUs />

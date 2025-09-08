@@ -22,8 +22,8 @@ const ContactUs = () => {
         <button className="primary-btn z-10 mt-8">Get A Quote</button>
       </div>
 
-      <div className="border-gray-15 mx-auto space-y-6 p-[40px] xl:p-[60px] lg:max-w-[846px] xl:border-x">
-        <div className="grid grid-cols-2 gap-6">
+      <div className="border-gray-15 mx-auto space-y-6 p-[20px] md:p-[40px] xl:p-[60px] lg:max-w-[846px] xl:border-x">
+        <div className="grid sm:grid-cols-2 gap-6">
           <div className="form-card flex flex-col gap-4">
             <p className="form-label">Full Name</p>
             <input className="form-input" type="text" placeholder="Type Here" />
@@ -40,7 +40,7 @@ const ContactUs = () => {
 
         <div className="form-card flex flex-col gap-5">
           <p className="form-label">Why are you contacting us?</p>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 gap-6">
             <div className="flex items-center gap-3">
               <Checkbox />
               <p>Web Design</p>
@@ -85,7 +85,7 @@ const ContactUs = () => {
           <textarea className="form-input !h-24" placeholder="Type Here" />
         </div>
 
-        <button className="primary-btn mt-4">Send Message</button>
+        <button className="primary-btn mt-3">Send Message</button>
       </div>
     </div>
   );

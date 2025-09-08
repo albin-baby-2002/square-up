@@ -73,7 +73,7 @@ body {
 }
 
 .form-card {
-  @apply border-gray-15 bg-gray-15/50 rounded-md border px-6 py-5;
+  @apply border-gray-15 bg-gray-15/50 rounded-md border p-4 md:px-6 md:py-5;
 }
 
 .form-label {

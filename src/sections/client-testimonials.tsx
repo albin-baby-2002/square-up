@@ -70,7 +70,7 @@ export const ClientTestimonials = () => {
           <div
             key={index}
             className={cn(
-              "border-gray-15 flex flex-col  justify-between space-y-[40px]  border-b p-10 xl:p-12",
+              "border-gray-15 flex flex-col  justify-between space-y-[40px]  border-b p-6 md:p-10 xl:p-12",
               {
                 "md:border-r": index % 2 === 0,
               },

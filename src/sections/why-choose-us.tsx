@@ -44,7 +44,7 @@ const WhyChooseUs = () => {
         {VALUES.map((value, index) => (
           <div
             key={index}
-            className={cn("border-gray-15 space-y-[30px] border-b p-10 xl:p-12", {
+            className={cn("border-gray-15 space-y-[30px] border-b p-6 md:p-10 xl:p-12", {
               "md:border-r": index % 2 === 0,
             })}
           >

@@ -21,7 +21,7 @@ export const FaqItem = ({
   return (
     <div
       className={cn(
-        "border-gray-15 h-max w-full border-b p-10 lg:px-12 transition-all duration-500 ease-in-out",
+        "border-gray-15 h-max w-full border-b p-5 md:p-10 lg:px-12 transition-all duration-500 ease-in-out",
         {
           "border-r": borderRight,
         },
@@ -34,7 +34,7 @@ export const FaqItem = ({
         onClick={onToggle}
       >
         <div className="flex items-center justify-center space-x-4">
-          <span className="from-gray-15 to-gray-15/0 flex min-w-[62px] min-h-[62px] items-center justify-center rounded-md bg-gradient-to-b text-2xl font-bold">
+          <span className="from-gray-15 to-gray-15/0 flex min-w-[50px] min-h-[50px] md:min-w-[62px] md:min-h-[62px] items-center justify-center rounded-md bg-gradient-to-b text-xl md:text-2xl font-bold">
             {number.toString().padStart(2, "0")}
           </span>
           <h3 className="text-lg font-medium xl:text-xl">{title}</h3>

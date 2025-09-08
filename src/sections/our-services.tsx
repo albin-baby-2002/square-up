@@ -37,7 +37,7 @@ const OurServices = () => {
         {SERVICES.map((service, index) => (
           <div
             className={cn(
-              "border-gray-15 flex  flex-col justify-between space-y-9  border-b p-10 lg:min-h-[500px] md:last:border-b-0 lg:border-b-0 xl:p-12",
+              "border-gray-15 flex  flex-col justify-between space-y-9  border-b p-6 md:p-10 lg:min-h-[500px] md:last:border-b-0 lg:border-b-0 xl:p-12",
               {
                 "lg:border-r": index !== 2,
                 "md:border-r":index % 2 === 0 ,
@@ -45,7 +45,7 @@ const OurServices = () => {
             )}
             key={index}
           >
-            <div className="flex flex-col gap-7 leading-[150%]">
+            <div className="flex flex-col gap-5 md:gap-7 leading-[150%]">
               <div className="flex md:flex-col md:gap-4 md:items-start items-center gap-3">
                 <div className=" size-[58px] md:size-[65px]">{service.image}</div>
                 <h3 className="text-xl md:text-2xl font-medium">
