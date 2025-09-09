@@ -55,28 +55,30 @@ const HeroSection = () => {
       </div>
 
       <motion.div
-
-          initial={{ opacity: 0, translateY: 20 }}
-          animate={{ opacity: 1, translateY: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-      className="space-x-3">
+        initial={{ opacity: 0, translateY: 20 }}
+        animate={{ opacity: 1, translateY: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 0.8 }}
+        className="space-x-3"
+      >
         <button className="secondary-btn">Our Works</button>
         <button className="primary-btn">Contact Us</button>
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0}}
-        animate={{ opacity: 1}}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 1, delay: 0.3 }}
       >
         <Image
           alt="hero-bg"
-          width={1920}
-          height={1080}
-          src={"/hero-bg.svg"}
-          className="absolute bottom-0 left-0 -z-[1] translate-x-[8%] scale-[3] sm:scale-[2] md:translate-x-0 md:scale-100 lg:opacity-[.9]"
+          priority
+          unoptimized
+          width={4719}
+          height={1362}
+          src={"/hero-bg.avif"}
+          className="absolute bottom-0 left-0 -z-[1] translate-x-[10%] scale-[3.5] sm:scale-[2] md:translate-x-0 md:scale-100"
         />
       </motion.div>
 
