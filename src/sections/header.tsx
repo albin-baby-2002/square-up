@@ -200,7 +200,7 @@ const NavBar = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (inactive.current) return; // Skip ALL observer updates when user clicked nav
+        if (inactive.current) return;
 
         // Find the entry with the highest intersection ratio
         let maxEntry = entries[0];
@@ -217,7 +217,9 @@ const NavBar = () => {
 
           // Update URL hash without triggering navigation
           const newHash = `#${id}`;
-          if (window.location.hash !== newHash) {
+          if (newHash === "#home") {
+            window.history.replaceState(null, "", "/");
+          } else if (window.location.hash !== newHash) {
             window.history.replaceState(null, "", `/${newHash}`);
           }
         }
