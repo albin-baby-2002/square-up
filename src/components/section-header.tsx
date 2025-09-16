@@ -171,7 +171,7 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
     [updateGlowingStars, updateThreshold],
   );
 
-  const handleMouseOver = useCallback((e) => {
+  const handleMouseOver = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     mouseOverRef.current = true;
     handleMouseMove(e)
   }, []);
