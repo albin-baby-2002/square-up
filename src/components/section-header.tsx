@@ -23,7 +23,7 @@ const SectionHeader = ({ heading, description }: TProps) => {
       onMouseLeave={() => {
         setMouseEnter(false);
       }}
-      className="border-gray-15 relative mx-auto flex w-full flex-col items-center justify-center space-y-[14px] border-b py-[50px] text-center lg:py-[70px] xl:py-[100px]"
+      className="border-gray-15 relative mx-auto flex w-full flex-col items-center justify-center space-y-[14px] border-b py-[50px] text-center lg:py-[70px] xl:py-[100px] overflow-clip"
     >
       {/* <div className="absolute top-0 h-full w-full bg-[radial-gradient(#191919_1px,#030303_1px)] bg-[size:20px_20px]"></div> */}
 
@@ -41,7 +41,7 @@ const SectionHeader = ({ heading, description }: TProps) => {
 
 export default SectionHeader;
 
-const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
+export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [glowingStars, setGlowingStars] = useState<number[]>([]);
   const highlightedStars = useRef<number[]>([]);

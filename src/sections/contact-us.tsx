@@ -1,15 +1,27 @@
 "use client";
+import { Illustration } from "@/components/section-header";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DualRangeSlider } from "@/components/ui/slider";
 import React, { useState } from "react";
 
 const ContactUs = () => {
   const [values, setValues] = useState([200, 500]);
+  const [mouseEnter, setMouseEnter] = useState(false);
   return (
     <div id="contact">
-      <div className="border-gray-15 relative mx-auto flex w-full flex-col items-center justify-center space-y-[14px] border-b py-[50px] text-center lg:py-[70px] xl:py-[100px]">
+      <div
+        onMouseEnter={() => {
+          setMouseEnter(true);
+        }}
+        onMouseLeave={() => {
+          setMouseEnter(false);
+        }}
+        className="border-gray-15 relative mx-auto flex w-full flex-col items-center justify-center space-y-[14px] border-b py-[50px]  overflow-clip text-center lg:py-[70px] xl:py-[100px]"
+      >
         {/* pattern */}
-        <div className="absolute top-0 h-full w-full bg-[radial-gradient(#191919_1px,#030303_1px)] bg-[size:20px_20px]"></div>
+        {/* <div className="absolute top-0 h-full w-full bg-[radial-gradient(#191919_1px,#030303_1px)] bg-[size:20px_20px]"></div> */}
+
+        <Illustration mouseEnter={mouseEnter} />
 
         <h2 className="z-10 max-w-[90%] text-[28px] font-semibold sm:text-[32px] md:text-[36px] lg:text-[42px]">
           Thank you for your Interest in SquareUp.
@@ -22,8 +34,8 @@ const ContactUs = () => {
         <button className="primary-btn z-10 mt-8">Get A Quote</button>
       </div>
 
-      <div className="border-gray-15 mx-auto space-y-6 p-[20px] md:p-[40px] xl:p-[60px] lg:max-w-[846px] xl:border-x">
-        <div className="grid sm:grid-cols-2 gap-6">
+      <div className="border-gray-15 mx-auto space-y-6 p-[20px] md:p-[40px] lg:max-w-[846px] xl:border-x xl:p-[60px]">
+        <div className="grid gap-6 sm:grid-cols-2">
           <div className="form-card flex flex-col gap-4">
             <p className="form-label">Full Name</p>
             <input className="form-input" type="text" placeholder="Type Here" />
@@ -40,7 +52,7 @@ const ContactUs = () => {
 
         <div className="form-card flex flex-col gap-5">
           <p className="form-label">Why are you contacting us?</p>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid gap-6 sm:grid-cols-2">
             <div className="flex items-center gap-3">
               <Checkbox />
               <p>Web Design</p>
