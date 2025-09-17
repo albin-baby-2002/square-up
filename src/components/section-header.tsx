@@ -166,7 +166,7 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
         // Only update if there's a meaningful change
         if (nearbyStars.length === 0 && prev.length === 0) return prev;
 
-        const prevItems = prev.slice(-6);
+        const prevItems = prev.slice(-3);
         const newStars = [...prevItems, ...nearbyStars];
 
         // Deduplicate
