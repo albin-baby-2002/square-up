@@ -60,7 +60,7 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
   const stars = columns * rows;
   const cellSize = 21; // 20px + 1px gap
   const glowRadius = 10;
-  const updateThreshold = 32; // ~30fps for smoother performance
+  const updateThreshold = 16; // Reduced for smoother tracking
 
   // Pre-calculate plus pattern offsets
   const plusOffsets = useMemo(
@@ -93,34 +93,34 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
     [starPositions],
   );
 
-  // Calculate distance between two points
-  const getDistance = (
+  // Optimized distance calculation (avoid sqrt when possible)
+  const getDistanceSquared = (
     pos1: { x: number; y: number },
     pos2: { x: number; y: number },
   ): number => {
-    return Math.sqrt(
-      Math.pow(pos1.x - pos2.x, 2) + Math.pow(pos1.y - pos2.y, 2),
-    );
+    const dx = pos1.x - pos2.x;
+    const dy = pos1.y - pos2.y;
+    return dx * dx + dy * dy;
   };
 
   // Update glowing stars based on mouse position
   const updateGlowingStars = useCallback(
-
     (mouseX: number, mouseY: number) => {
-
       if (!mouseOverRef.current) {
         setGlowingStars([...highlightedStars.current]);
         return;
       }
 
       const nearbyStars: number[] = [];
+      const glowRadiusSquared = glowRadius * glowRadius;
 
       // Optimize: only check stars in nearby grid area
       const mouseCol = Math.floor((mouseX - 10) / cellSize);
       const mouseRow = Math.floor((mouseY - 10) / cellSize);
       const searchRadius = Math.ceil(glowRadius / cellSize);
 
-      outerLoop: for (
+      // Use single loop with early exit
+      for (
         let r = Math.max(0, mouseRow - searchRadius);
         r <= Math.min(rows - 1, mouseRow + searchRadius);
         r++
@@ -132,11 +132,14 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
         ) {
           const i = r * columns + c;
           const starPos = starPositions[i];
-          const distance = getDistance({ x: mouseX, y: mouseY }, starPos);
+          const distanceSquared = getDistanceSquared(
+            { x: mouseX, y: mouseY },
+            starPos,
+          );
 
-          if (distance <= glowRadius) {
-            const centerRow = Math.floor(i / columns) - 1;
-            const centerCol = i % columns;
+          if (distanceSquared <= glowRadiusSquared) {
+            const centerRow = r;
+            const centerCol = c;
 
             // Use pre-calculated plus pattern offsets
             for (const [rowOffset, colOffset] of plusOffsets) {
@@ -149,28 +152,33 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
                 newCol < columns
               ) {
                 const newIndex = newRow * columns + newCol;
-                nearbyStars.push(newIndex);
+                if (!nearbyStars.includes(newIndex)) {
+                  nearbyStars.push(newIndex);
+                }
               }
             }
-
-            break outerLoop; // Exit both loops once we find the first match
           }
         }
       }
 
+      // Use functional update to avoid stale closures
       setGlowingStars((prev) => {
-        const prevItems = prev.slice(-8); // Keep fewer previous items
-        return [...prevItems, ...nearbyStars];
+        // Only update if there's a meaningful change
+        if (nearbyStars.length === 0 && prev.length === 0) return prev;
+
+        const prevItems = prev.slice(-6);
+        const newStars = [...prevItems, ...nearbyStars];
+
+        // Deduplicate
+        return [...new Set(newStars)];
       });
     },
     [cellSize, glowRadius, starPositions, columns, rows, plusOffsets],
   );
 
-  // Throttled mouse movement handler
+  // Optimized mouse movement handler with better throttling
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      const now = performance.now();
-
       // Get rect immediately while event is valid
       const rect = e.currentTarget.getBoundingClientRect();
       const newMousePos = {
@@ -183,20 +191,19 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
         cancelAnimationFrame(animationFrameRef.current);
       }
 
-      // Throttle updates
-      if (now - lastUpdateTime.current < updateThreshold) {
-        animationFrameRef.current = requestAnimationFrame(() => {
-          setMousePos(newMousePos);
-          updateGlowingStars(newMousePos.x, newMousePos.y);
-          lastUpdateTime.current = performance.now();
-        });
-        return;
-      }
+      // Use requestAnimationFrame for all updates to sync with display refresh
+      animationFrameRef.current = requestAnimationFrame(() => {
+        const now = performance.now();
 
-      // Immediate update if enough time has passed
-      setMousePos(newMousePos);
-      updateGlowingStars(newMousePos.x, newMousePos.y);
-      lastUpdateTime.current = now;
+        // Update mouse position immediately for visual feedback
+        setMousePos(newMousePos);
+
+        // Throttle glow updates for performance
+        if (now - lastUpdateTime.current >= updateThreshold) {
+          updateGlowingStars(newMousePos.x, newMousePos.y);
+          lastUpdateTime.current = now;
+        }
+      });
     },
     [updateGlowingStars, updateThreshold],
   );
@@ -212,6 +219,12 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
   const handleMouseLeave = useCallback(() => {
     mouseOverRef.current = false;
     console.log("mouse out");
+
+    // Cancel any pending updates
+    if (animationFrameRef.current) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
     setGlowingStars([...highlightedStars.current]);
   }, []);
 
@@ -228,8 +241,6 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
     return () => clearInterval(interval);
   }, [stars]);
 
-
-
   // Cleanup animation frame on unmount
   useEffect(() => {
     return () => {
@@ -239,71 +250,83 @@ export const Illustration = ({ mouseEnter }: { mouseEnter: boolean }) => {
     };
   }, []);
 
+  // Memoize the star grid to prevent unnecessary re-renders
+  const starGrid = useMemo(() => {
+    return [...Array(stars)].map((_, starIdx) => {
+      const delay = (starIdx % 10) * 0.1;
+      return (
+        <div
+          key={`matrix-col-${starIdx}`}
+          className="relative flex items-center justify-center"
+        >
+          <Star
+            isGlowing={glowingStars.includes(starIdx)}
+            mouseOver={mouseOverRef.current}
+            delay={mouseEnter ? 0 : delay}
+          />
+        </div>
+      );
+    });
+  }, [stars, glowingStars, mouseEnter]);
+
   return (
     <div
       className="absolute top-0 left-0 z-20 h-full w-full p-1"
       onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseOver}
+      onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
       style={{
         display: "grid",
         gridTemplateColumns: `repeat(${columns}, 20px)`,
         gap: `1px`,
+        willChange: "transform", // Hint to browser for optimization
       }}
     >
-      {[...Array(stars)].map((_, starIdx) => {
-        const isGlowing = glowingStars.includes(starIdx);
-        const delay = (starIdx % 10) * 0.1;
-        return (
-          <div
-            key={`matrix-col-${starIdx}}`}
-            className="relative flex items-center justify-center"
-          >
-            <Star
-              isGlowing={isGlowing}
-              mouseOver={mouseOverRef.current}
-              delay={mouseEnter ? 0 : delay}
-            />
-          </div>
-        );
-      })}
+      {starGrid}
     </div>
   );
 };
 
-const Star = ({
-  isGlowing,
-  delay,
-  mouseOver,
-}: {
-  mouseOver: boolean;
-  isGlowing: boolean;
-  delay: number;
-}) => {
-  return (
-    <motion.div
-      key={delay}
-      initial={{
-        scale: 1,
-      }}
-      animate={{
-        scale: isGlowing
-          ? mouseOver
-            ? [2.8, 2.8]
-            : [1, 1.2, 2.5, 2.2, 1.5]
-          : 1,
-        background: isGlowing
-          ? mouseOver
-            ? "var(--color-green-50)"
-            : "#fff"
-          : "#666",
-      }}
-      transition={{
-        duration: 0.2,
-        ease: "easeInOut",
-        delay: delay,
-      }}
-      className={cn("relative z-20 h-[1px] w-[1px] rounded-full bg-[#666]")}
-    ></motion.div>
-  );
-};
+const Star = React.memo(
+  ({
+    isGlowing,
+    delay,
+    mouseOver,
+  }: {
+    mouseOver: boolean;
+    isGlowing: boolean;
+    delay: number;
+  }) => {
+    return (
+      <motion.div
+        key={delay}
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: isGlowing
+            ? mouseOver
+              ? [2.8, 2.8]
+              : [1, 1.2, 2.5, 2.2, 1.5]
+            : 1,
+          background: isGlowing
+            ? mouseOver
+              ? "var(--color-green-50)"
+              : "#fff"
+            : "#666",
+        }}
+        transition={{
+          duration: 0.15, // Slightly faster transitions
+          ease: "easeOut", // Better easing for performance
+          delay: delay,
+        }}
+        className={cn("relative z-20 h-[1px] w-[1px] rounded-full bg-[#666]")}
+        style={{
+          willChange: isGlowing ? "transform, background-color" : "auto", // Optimize for animations
+        }}
+      ></motion.div>
+    );
+  },
+);
+
+Star.displayName = "Star";
